@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React Context API</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // création d'un context avec éventuellement des données dedans
+        // nous on en mettra pas
+        const PostContext = React.createContext({});
+
+        // Source de vérité
+        const initialState = {
+            posts: []
+        };
+
+        const reducer = (state, action) => {
+            switch (action.type) {
+
+                // charger les posts au lancement de l'application
+                case 'INIT':
+
+                    return { ...state, posts: action.posts }
+
+                case 'SHUFFLE':
+                    // copie des posts que se trouve dans le state : pas toucher à la source de vérité
+                    const posts =  [ ...state.posts ];
+
+                    // astuce pour mélanger les données dans un tableau
+                    posts.sort(() => Math.random() - .5 );
+
+                    return { ...state, posts: posts}
+
+                default:
+                    return state;
+            }
+        }
+
+        // Définition d'un Provider par composition
+        // on passe le state et le dispatch au provider pour pouvoir accéder au state et au dispatch 
+        // dans un context d'arbre React donné
+        const PostProvider = ({ children }) => {
+
+            const [state, dispatch] = React.useReducer(reducer, initialState);
+
+            React.useEffect(() => {
+                dispatch({ type: 'INIT', posts: [
+                    { id: 1, title: "hello1" }, 
+                    { id: 2, title: "hello2" },
+                    { id: 3, title: "hello3" },
+                    { id: 4, title: "hello4" },
+
+                    ] })
+            }, []);
+
+            return (
+                <PostContext.Provider value={[state, dispatch]}>
+                    {children}
+                </PostContext.Provider>
+            )
+        }
+
+        const Posts = () => {
+
+            const [state, dispatch] = React.useContext(PostContext);
+            const { posts } = state;
+
+            return (
+                <React.Fragment>
+                    {posts && posts.map((post, i) => <p key={i}>{post.title}</p>)}
+                    <button onClick={() => dispatch({ type: 'SHUFFLE' })}>Shuffle</button>
+                </React.Fragment>
+            )
+        }
+
+        // 
+        const App = props => {
+
+            return (
+                <PostProvider>
+                    <Posts />
+                </PostProvider>
+            )
+        }
+        // rendu dans le DOM
+        ReactDOM.render(
+            < App />,
+            document.getElementById('root')
+        );
+    </script>
+</body>
+
+</html>

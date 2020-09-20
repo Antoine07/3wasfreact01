@@ -1,0 +1,9 @@
+
+!/Chap2_virtuel/
+/Chap2_virtuel/*
+!/Chap2_virtuel/Code
+!/Chap2_virtuel/Examples/Code
+
+node_modules/
+
+.DS_Store
