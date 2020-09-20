@@ -72,3 +72,147 @@ let numbers = [7, 9, 10, 1, 2, 3, 71, 8 ];
 Faite un script qui prend en argument un texte et qui retourne un tableau des valeurs du nombre de caractères de chaque mot. 
 
 Indication : utilisez la méthode split pour transformer la chaîne en tableau.
+
+
+## Méthode spread pour copier un tableau
+
+Vous pouvez utiliser la méthode spread pour faire une copie peu profonde d'un objet :
+
+```js
+let numbers = [7, 9, 10, 1, 2, 3, 71, 8 ];
+
+let cloneNumbers = [ ...numbers ];
+
+```
+
+Le spread operator ne marchera pas sur des objets plus complexes (imbriqués).
+
+
+## Map
+
+Un objet Map est une collection de paires clé/valeur qui peut utiliser n'importe quel type de données comme clé et peut maintenir l'ordre de ses entrées. Il n'y a pas de notion d'ordre.
+
+
+```js
+const jedi = new Map()
+
+```
+
+### Ajoutez des valeurs dans un Map 
+
+```js
+jedi.set('firstName', 'Luke')
+jedi.set('lastName', 'Skywalker')
+jedi.set('job', 'Jedi Master')
+```
+
+Vous pouvez également ajouter des valeurs dans un map à l'aide d'un tableau de tableaux:
+
+```js
+const jedi = new Map([
+  ['firstName', 'Luke'],
+  ['lastName', 'Skywalker'],
+  ['job', 'Jedi Master'],
+])
+```
+
+Quelques fonctions utiles sur les maps :
+
+```js
+
+// rechercher une clé 
+jedi.has('shark') // false
+
+// accéder à une valeur à partir de sa clé
+jedi.get('firstName')
+
+// taille du map
+jedi.size
+
+// supprimer un élément
+jedi.delete('firstName');
+
+// tout supprimer
+jedi.clear()
+
+// les keys et values
+jedi.keys()
+jedi.values()
+// les deux 
+jedi.entries()
+```
+
+### Itération sur un Map
+
+- à l'aide d'un for of
+
+```js
+for (const [key, value] of jedi) {
+  console.log(`${key}: ${value}`)
+}
+```
+
+- à l'aide d'un foreEach 
+
+```js
+jedi.forEach(( v, k ) =>  console.log(v, k));
+```
+
+### Exercice average Map 
+
+Soit les valeurs dans un tableau suivante, créez un Map pour enregistrer ces valeurs. Puis faites un script qui permettra de calculer la moyenne de chaque étudiant. Créez un Map des moyennes avec pour clé le nom de l'étudiant.
+
+
+```js
+
+const DataStudents = 
+  [ [ "s1" , 
+        [ 
+            "name": "Alice", 
+            "lessons": ["lesson1", "lesson2"], 
+            "attendance": 0, 
+            "notes": [11, 12, 18] , 
+            "url" : "http://lorempixel.com/100/100/cats/1"
+        ],
+    ],
+    [
+        "s2" ,
+        [
+            "name": "Alan", 
+            "lessons": ["lesson3"], 
+            "attendance": 0, 
+            "notes": [10, 14.5, 11],
+            "url" : "http://lorempixel.com/100/100/cats/2"
+        ],
+    ],
+    [
+        "s3" ,
+        [
+            "name": "Phil", 
+            "lessons": ["lesson1", "lesson2", "lesson3"], 
+            "attendance": 0, 
+            "notes": [11, 9, 9],
+            "url" : "http://lorempixel.com/100/100/cats/2"
+        ],
+    ]
+    [ "s4" :
+        [  
+            "name": "Naoudi", 
+            "lessons": ["lesson1"], 
+            "attendance": 0, 
+            "notes": [14.5, 19, 18],
+            "url" : "http://lorempixel.com/100/100/cats/3"
+        ],
+    ]
+    [ "s5" :
+        [ 
+            "name": "Fenley", 
+            "lessons": ["lesson3"], 
+            "attendance": 0, 
+            "notes": [9, 7, 11],
+            "url" : "http://lorempixel.com/100/100/cats/4"
+        ]
+    ]
+  ];
+
+```
